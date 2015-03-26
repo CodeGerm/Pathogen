@@ -1,0 +1,14 @@
+package org.cg.rule.sample.stateless
+
+import org.apache.commons.logging.Log;
+import org.cg.rule.engine.common.sample.model.SampleFact;
+
+//declare any global variables here
+global Log LOG;
+
+rule "Sample App"
+    when
+        $sampleFact : SampleFact( propertyA == 1, propertyB == 2 )
+    then		
+        LOG.info("[stateless]triggerd");
+end

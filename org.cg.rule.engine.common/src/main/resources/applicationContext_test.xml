@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">	
+	
+	<bean id="statelessKieSession" class ="org.cg.rule.engine.common.session.StatelessKieSession" init-method="init">
+		<property name="settingPath" value="conf/settings.xml" />
+		<property name="groupId" value="org.cg.rule.sample" />
+		<property name="artifactId" value="org.cg.rule.sample" />
+        <property name="version" value="${org.cg.stateless.rule.version}" />
+   		<property name="session" value="statelessKsession" />
+	</bean>
+	<bean id="statefulKieSession" class ="org.cg.rule.engine.common.session.StatefulKieSession" init-method="init" >
+		<property name="settingPath" value="conf/settings.xml" />
+		<property name="groupId" value="org.cg.rule.sample" />
+		<property name="artifactId" value="org.cg.rule.sample" />
+		<property name="version" value="${org.cg.stateful.rule.version}" />
+		<property name="session" value="statefulKsession" />
+	</bean>
+		
+	<bean id="sampleFactProvider" class="org.cg.rule.engine.common.provider.SampleFactFileProvider"/>
+
+	<bean id="sampleFactStatefulListener" class="org.cg.rule.engine.common.listener.StatefulSampleFactListener" />
+	<bean id="sampleFactStatelessListener" class="org.cg.rule.engine.common.listener.StatelessSampleFactListener" />
+	 
+	<bean id="sampleFactSource" class="org.cg.rule.engine.common.source.SampleFactSource">
+		<property name="factListeners">
+			<list>
+				<ref bean='sampleFactStatefulListener' />
+				<ref bean='sampleFactStatelessListener' />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="sampleFactFileDao" class="org.cg.rule.engine.common.persister.SampleFactFileDao" >
+		<constructor-arg value="${sample.fact.file.path}"/>
+	</bean>
+
+	<!-- load properties from config.properites -->
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="600" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:default.properties</value>
+			</list>
+		</property>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name='properties'>
+            <props>
+            	<prop key="myProp">no-override</prop>
+            </props>
+        </property>	
+	</bean>
+
+	<!-- This element activates annotations in beans already registered in the application context -->
+	<context:annotation-config />
+</beans>

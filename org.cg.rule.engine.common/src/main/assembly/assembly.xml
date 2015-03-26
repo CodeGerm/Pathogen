@@ -1,0 +1,64 @@
+<!DOCTYPE xml>
+<assembly>
+	<id>bin</id>
+	<!-- Generates a zip package containing the needed files -->
+	<formats>
+		<format>zip</format>
+	</formats>
+
+	<!-- Adds dependencies to zip package under lib directory -->
+	<!-- Project artifact is not copied under library directory since it is 
+		added to the root directory of the zip package. -->
+
+	<!-- <dependencySets> <dependencySet> <useProjectArtifact>false</useProjectArtifact> 
+		<outputDirectory>lib</outputDirectory> <unpack>false</unpack> </dependencySet> 
+		</dependencySets> -->
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}/</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>plugin.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>/conf/**</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/target</directory>
+			<outputDirectory>/target</outputDirectory>
+			<includes>
+				<include>lib/**</include>
+				<include>classes/**</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources/appassembler
+			</directory>
+			<outputDirectory>/target/appassembler</outputDirectory>
+			<includes>
+				<include>/**</include>
+			</includes>
+		</fileSet>
+
+		<fileSet>
+			<directory>${project.basedir}/target</directory>
+			<outputDirectory>/target</outputDirectory>
+			<includes>
+				<include>lib/**</include>
+				<include>*.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/META-INF</directory>
+			<outputDirectory>/META-INF</outputDirectory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

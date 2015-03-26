@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
+
+	<kbase name="theStatefulRules" packages="org.cg.rule.sample.stateful">
+		<ksession name="statefulKsession" type="stateful">
+			<consoleLogger />
+		</ksession>
+	</kbase>
+
+	<kbase name="theStatelessRules" packages="org.cg.rule.sample.stateless">
+		<ksession name="statelessKsession" type="stateless">
+			<consoleLogger />
+		</ksession>
+	</kbase>
+
+</kmodule>
